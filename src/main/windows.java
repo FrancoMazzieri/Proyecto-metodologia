@@ -72,7 +72,7 @@ public class windows extends JFrame implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         gameState.draw(g);
-
+        g.drawString(""+averageFps, 10, 20);
         //----------------------------------
         g.dispose();
         bs.show();
@@ -99,8 +99,8 @@ public class windows extends JFrame implements Runnable {
             now = System.nanoTime();
             delta += (now - lastTime) / targetTime;
             time += (now - lastTime);
-
             lastTime = now;
+            
             if (delta >= 1) {
                 update();
                 draw();
@@ -109,7 +109,7 @@ public class windows extends JFrame implements Runnable {
             }
             if (time >= 1000000000) {
                 averageFps = frames;
-                System.out.println(averageFps);
+               
                 frames = 0;
                 time = 0;
             }
@@ -129,7 +129,7 @@ public class windows extends JFrame implements Runnable {
             thread.join();
             running = false;
         } catch (InterruptedException e) {
-
+                   e.printStackTrace();
         }
     }
 }

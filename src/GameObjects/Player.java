@@ -20,23 +20,40 @@ import java.awt.image.BufferedImage;
 public class Player extends MovingObject {
 
     private Vector2D heading;
-
-    public Player(Vector2D posicion, Vector2D velocity, BufferedImage textura) {
-        super(posicion, velocity, textura);
+    private Vector2D acceleration;
+    private final double ACC = 0.2;
+    private final double DELTAANGLE = 0.1;
+    
+    public Player(Vector2D posicion, Vector2D velocity,double maxvel, BufferedImage textura) {
+        super(posicion, velocity, maxvel, textura);
         heading = new Vector2D(0,1); 
+        acceleration = new Vector2D();
     }
 
     @Override
     public void update() {
-        if (KeyBoard.RIGHT) {
-            angle += Math.PI / 20;
+        if (KeyBoard.RIGHT) 
+            angle +=DELTAANGLE;
+        
+        if (KeyBoard.LEFT) 
+            angle -= DELTAANGLE;
+        
+         if (KeyBoard.UP) {
+            acceleration = heading.scale(ACC);
         }
-        if (KeyBoard.LEFT) {
-            angle -= Math.PI / 20;
-        }
-
+         else{
+             if (velocity.getMagnitude()!=0)
+                 acceleration = (velocity.scale(-1).normalize()).scale(ACC/2);
+             
+         }
+        velocity= velocity.add(acceleration);
+        
+        velocity.limit(maxvel);
+        
         heading = heading.setDirection(angle - Math.PI / 2);
-
+        
+        posicion = posicion.add(velocity);
+        
     }
 
     @Override

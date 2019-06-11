@@ -19,8 +19,8 @@ public class GameState {
     private Player player;
 
     public GameState() {
-        player = new Player(new Vector2D(350, 400), new Vector2D(), Assets.player);
-    }
+        player = new Player(new Vector2D(400 , 300), new Vector2D(),5, Assets.player);
+    } 
 
     
     
