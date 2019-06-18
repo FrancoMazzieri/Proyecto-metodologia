@@ -29,20 +29,13 @@ public class Vector2D {
     public Vector2D scale(double value){
        return new Vector2D(x*value,y*value);
     }
-    public void limit(double value){
-        if (x > value)
-             x = value;
+    public Vector2D limit(double value){
         
-        if (x < -value) 
-             x = - value;
+        if(getMagnitude() > value){
+        return this.normalize().scale(value);
+        }
         
-        if (y > value)
-             y = value;
-        
-        if (y < -value)
-             y = - value;
-        
-        
+        return this;
     }
     public Vector2D normalize(){
      return new Vector2D(x/getMagnitude(),y / getMagnitude());

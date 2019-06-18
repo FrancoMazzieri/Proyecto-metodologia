@@ -15,8 +15,11 @@ public class Assets {
     
     public static BufferedImage player;
     
+    public static BufferedImage speed;
+    
     public static void init(){
         player = Loader.ImageLoader("/Naves/player.png");
+        speed = Loader.ImageLoader("/spaceshooter.PNG.Effects/fire08.png");
 
 }
 }

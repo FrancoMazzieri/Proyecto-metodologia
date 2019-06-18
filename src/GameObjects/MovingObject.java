@@ -10,10 +10,16 @@ public abstract class MovingObject extends GameObject {
     protected AffineTransform at;
     protected double angle;
     protected double maxvel;
+    protected int width;
+    protected int height;
+    
+    
     public MovingObject(Vector2D posicion,Vector2D velocity,double maxvel, BufferedImage textura) {
         super(posicion, textura);
         this.velocity = velocity;
         this.maxvel = maxvel;
+        width = textura.getWidth();
+        height = textura.getHeight();
         angle = 0;
     }
 
