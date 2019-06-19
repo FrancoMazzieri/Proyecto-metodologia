@@ -7,6 +7,7 @@ package GameObjects;
 
 import Graphics.Assets;
 import Math.Vector2D;
+import States.GameState;
 import input.KeyBoard;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,15 +26,30 @@ public class Player extends MovingObject {
     private final double ACC = 0.2;
     private final double DELTAANGLE = 0.1;
     private boolean accelerating = false;
+    private GameState gameState;
+    
+    private long time,lastTime;
+    
 
-    public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura) {
+    public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState) {
         super(posicion, velocity, maxvel, textura);
+        this.gameState = gameState;
         heading = new Vector2D(0, 1);
         acceleration = new Vector2D();
+        time = 0;
+        lastTime = System.currentTimeMillis();
+
     }
 
     @Override
     public void update() {
+        time += System.currentTimeMillis()-lastTime;
+        lastTime = System.currentTimeMillis();
+        
+        if (KeyBoard.SHOOT && time > 300) {
+            gameState.getMovingObjects().add(0 , new Laser(getCenter().add(heading.scale(width )), heading, 10, angle, Assets.redLaser));
+         time = 0;
+        }
         if (KeyBoard.RIGHT) {
             angle += DELTAANGLE;
         }
@@ -46,11 +62,10 @@ public class Player extends MovingObject {
             acceleration = heading.scale(ACC);
             accelerating = true;
         } else {
-            if (velocity.getMagnitude() != 0)
+            if (velocity.getMagnitude() != 0) {
                 acceleration = (velocity.scale(-1).normalize()).scale(ACC / 2);
-                accelerating = false;
-            
-            
+            }
+            accelerating = false;
 
         }
         velocity = velocity.add(acceleration);
@@ -81,10 +96,10 @@ public class Player extends MovingObject {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        AffineTransform at1 = AffineTransform.getTranslateInstance(posicion.getX() + width / 2 +5, posicion.getY() + height / 2 +10);
+        AffineTransform at1 = AffineTransform.getTranslateInstance(posicion.getX() + width / 2 + 5, posicion.getY() + height / 2 + 10);
         AffineTransform at2 = AffineTransform.getTranslateInstance(posicion.getX() + 5, posicion.getY() + height / 2 + 10);
         at1.rotate(angle, -5, -10);
-        at2.rotate(angle, width/2 -5, -10);
+        at2.rotate(angle, width / 2 - 5, -10);
         if (accelerating) {
             g2d.drawImage(Assets.speed, at2, null);
             g2d.drawImage(Assets.speed, at1, null);
@@ -95,6 +110,12 @@ public class Player extends MovingObject {
         at.rotate(angle, width / 2, height / 2);
 
         g2d.drawImage(Assets.player, at, null);
+
+    }
+
+    public Vector2D getCenter() {
+
+        return new Vector2D(posicion.getX() + width / 2, posicion.getY() + height / 2);
 
     }
 
