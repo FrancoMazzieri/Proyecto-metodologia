@@ -26,44 +26,42 @@ public class Player extends MovingObject {
     private final double ACC = 0.2;
     private final double DELTAANGLE = 0.1;
     private boolean accelerating = false;
-    private GameState gameState;
+    private cronometer fireRate;
     
-    private long time,lastTime;
+  
     
 
     public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState) {
-        super(posicion, velocity, maxvel, textura);
-        this.gameState = gameState;
+        super(posicion, velocity, maxvel, textura,gameState);
+        
         heading = new Vector2D(0, 1);
         acceleration = new Vector2D();
-        time = 0;
-        lastTime = System.currentTimeMillis();
+        fireRate = new cronometer();
 
     }
 
     @Override
     public void update() {
-        time += System.currentTimeMillis()-lastTime;
-        lastTime = System.currentTimeMillis();
+   
         
-        if (KeyBoard.SHOOT && time > 300) {
-            gameState.getMovingObjects().add(0 , new Laser(getCenter().add(heading.scale(width )), heading, 10, angle, Assets.redLaser));
-         time = 0;
+        if (KeyBoard.SHOOT && !fireRate.isRunning()) {
+            gameState.getMovingObjects().add(0 , new Laser(getCenter().add(heading.scale(width )), heading, 10, angle, Assets.redLaser,gameState));  
         }
+           fireRate.run(constans.FIRERATE);
         if (KeyBoard.RIGHT) {
-            angle += DELTAANGLE;
+            angle +=constans.DELTAANGLE;
         }
 
         if (KeyBoard.LEFT) {
-            angle -= DELTAANGLE;
+            angle -=constans.DELTAANGLE;
         }
 
         if (KeyBoard.UP) {
-            acceleration = heading.scale(ACC);
+            acceleration = heading.scale(constans.ACC);
             accelerating = true;
         } else {
             if (velocity.getMagnitude() != 0) {
-                acceleration = (velocity.scale(-1).normalize()).scale(ACC / 2);
+                acceleration = (velocity.scale(-1).normalize()).scale(constans.ACC / 2);
             }
             accelerating = false;
 
@@ -76,19 +74,19 @@ public class Player extends MovingObject {
 
         posicion = posicion.add(velocity);
 
-        if (posicion.getX() > windows.WIDTH) {
+        if (posicion.getX() > constans.WIDTH) {
             posicion.setX(0);
         }
-        if (posicion.getY() > windows.HEIGHT) {
+        if (posicion.getY() > constans.WIDTH) {
             posicion.setY(0);
         }
         if (posicion.getX() < 0) {
-            posicion.setX(windows.WIDTH);
+            posicion.setX(constans.HEIGHT);
         }
         if (posicion.getY() < 0) {
-            posicion.setY(windows.HEIGHT);
+            posicion.setY(constans.HEIGHT);
         }
-
+          fireRate.update();
     }
 
     @Override

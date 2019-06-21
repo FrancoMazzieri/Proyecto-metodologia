@@ -5,6 +5,7 @@
  */
 package main;
 
+import GameObjects.constans;
 import Graphics.Assets;
 import States.GameState;
 import input.KeyBoard;
@@ -35,19 +36,22 @@ public class windows extends JFrame implements Runnable {
 
     public windows() {
         setTitle("JavaApplication32");
-        setSize(WIDTH, HEIGHT);
+        setSize(constans.WIDTH,constans.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
-        setVisible(true);
+       
+        
         canvas = new Canvas();
         keyBoard = new KeyBoard();
-        canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        
+        canvas.setPreferredSize(new Dimension(constans.WIDTH,constans.HEIGHT));
+        canvas.setMaximumSize(new Dimension(constans.WIDTH,constans.HEIGHT));
+        canvas.setMinimumSize(new Dimension(constans.WIDTH,constans.HEIGHT));
         canvas.setFocusable(true);
         add(canvas);
         canvas.addKeyListener(keyBoard);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -71,7 +75,7 @@ public class windows extends JFrame implements Runnable {
         //----------------------------------
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, constans.WIDTH,constans.HEIGHT);
         gameState.draw(g);
         g.drawString(""+averageFps, 10, 20);
         //----------------------------------

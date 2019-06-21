@@ -7,6 +7,7 @@ package GameObjects;
 
 import Graphics.Assets;
 import Math.Vector2D;
+import States.GameState;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -18,8 +19,8 @@ import java.awt.image.BufferedImage;
  */
 public class Laser extends MovingObject {
 
-    public Laser(Vector2D posicion, Vector2D velocity, double maxvel, double angle, BufferedImage textura) {
-        super(posicion, velocity, maxvel, textura);
+    public Laser(Vector2D posicion, Vector2D velocity, double maxvel, double angle, BufferedImage textura,GameState gameState) {
+        super(posicion, velocity, maxvel, textura,gameState);
         this.angle = angle;
         this.velocity = velocity.scale(maxvel);
     }
@@ -27,6 +28,10 @@ public class Laser extends MovingObject {
     @Override
     public void update() {
         posicion = posicion.add(velocity);
+        if(posicion.getX() < 0 || posicion.getX() > constans.WIDTH ||
+                posicion.getY() < 0 ||posicion.getY() > constans.HEIGHT){
+            gameState.getMovingObjects().remove(this);
+        }
     }
 
     @Override
