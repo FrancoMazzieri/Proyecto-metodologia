@@ -26,5 +26,7 @@ public class constans {
     //Laser propiedades 
     
     public static final double LASER_VEL = 15.0;
+    //Meteors propiedades
+    public static final double METEOR_VEL = 2.0;
     
 }
