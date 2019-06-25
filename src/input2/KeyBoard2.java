@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package input;
+package input2;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,13 +12,13 @@ import java.awt.event.KeyListener;
  *
  * @author Franco
  */
-public class KeyBoard implements KeyListener {
+public class KeyBoard2 implements KeyListener {
 
     private boolean[] keys = new boolean[256];
 
     public static boolean UP, LEFT, RIGHT, SHOOT;
 
-    public KeyBoard() {
+    public KeyBoard2() {
         UP = false;
         LEFT = false;
         RIGHT = false;

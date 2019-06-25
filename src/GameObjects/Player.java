@@ -8,7 +8,7 @@ package GameObjects;
 import Graphics.Assets;
 import Math.Vector2D;
 import States.GameState;
-import input.KeyBoard;
+import input2.KeyBoard2;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -44,19 +44,19 @@ public class Player extends MovingObject {
     public void update() {
    
         
-        if (KeyBoard.SHOOT && !fireRate.isRunning()) {
+        if (KeyBoard2.SHOOT && !fireRate.isRunning()) {
             gameState.getMovingObjects().add(0 , new Laser(getCenter().add(heading.scale(width )), heading, 10, angle, Assets.redLaser,gameState));  
         }
            fireRate.run(constans.FIRERATE);
-        if (KeyBoard.RIGHT) {
+        if (KeyBoard2.RIGHT) {
             angle +=constans.DELTAANGLE;
         }
 
-        if (KeyBoard.LEFT) {
+        if (KeyBoard2.LEFT) {
             angle -=constans.DELTAANGLE;
         }
 
-        if (KeyBoard.UP) {
+        if (KeyBoard2.UP) {
             acceleration = heading.scale(constans.ACC);
             accelerating = true;
         } else {
