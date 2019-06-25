@@ -8,7 +8,7 @@ package main;
 import GameObjects.constans;
 import Graphics.Assets;
 import States.GameState;
-import input.KeyBoard;
+import input.KeyBoard2;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,7 +32,7 @@ public class windows extends JFrame implements Runnable {
     private int averageFps = fps;
 
     private GameState gameState;
-    private KeyBoard keyBoard;
+    private KeyBoard2 keyBoard;
 
     public windows() {
         setTitle("JavaApplication32");
@@ -43,7 +43,7 @@ public class windows extends JFrame implements Runnable {
        
         
         canvas = new Canvas();
-        keyBoard = new KeyBoard();
+        keyBoard = new KeyBoard2();
         
         canvas.setPreferredSize(new Dimension(constans.WIDTH,constans.HEIGHT));
         canvas.setMaximumSize(new Dimension(constans.WIDTH,constans.HEIGHT));
