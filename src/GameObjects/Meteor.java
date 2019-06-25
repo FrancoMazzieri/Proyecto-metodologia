@@ -20,6 +20,7 @@ public class Meteor extends MovingObject {
     public Meteor(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState, Size size) {
         super(posicion, velocity, maxvel, textura, gameState);
     this.size = size;
+    this.velocity = velocity.scale(maxvel);
    
     }
 
@@ -28,15 +29,15 @@ public class Meteor extends MovingObject {
         posicion = posicion.add(velocity);
         
         if (posicion.getX() > constans.WIDTH) {
-            posicion.setX(0);
+            posicion.setX(-width);
         }
         if (posicion.getY() > constans.WIDTH) {
-            posicion.setY(0);
+            posicion.setY(-height);
         }
-        if (posicion.getX() < 0) {
+        if (posicion.getX() < -width) {
             posicion.setX(constans.HEIGHT);
         }
-        if (posicion.getY() < 0) {
+        if (posicion.getY() < -height) {
             posicion.setY(constans.HEIGHT);
             }
             angle += constans.DELTAANGLE/2;
