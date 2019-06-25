@@ -41,12 +41,14 @@ public class Meteor extends MovingObject {
             posicion.setY(constans.HEIGHT);
             }
             angle += constans.DELTAANGLE/2;
-            
-            
-            
-        
-        
     }
+    /*
+    @Override
+    public void Destroy(){
+    gameState.divideMeteor(this);
+    super.Destroy();
+    }
+*/
 
     @Override
     public void draw(Graphics g) {
