@@ -16,7 +16,6 @@ import java.awt.image.BufferedImage;
 public class Meteor extends MovingObject {
     
     private Size size;
-    private Image texture;
 
     public Meteor(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState, Size size) {
         super(posicion, velocity, maxvel, textura, gameState);
@@ -39,12 +38,12 @@ public class Meteor extends MovingObject {
         }
         if (posicion.getY() < 0) {
             posicion.setY(constans.HEIGHT);
-            
+            }
             angle += constans.DELTAANGLE/2;
             
             
             
-        }
+        
         
     }
 
@@ -57,7 +56,7 @@ public class Meteor extends MovingObject {
           at = AffineTransform.getTranslateInstance(posicion.getX(), posicion.getY());
         at.rotate(angle, width / 2, height / 2);
 
-       g2d.drawImage(texture, at, null);
+       g2d.drawImage(textura, at, null);
     }
     
     public Size getSize(){
