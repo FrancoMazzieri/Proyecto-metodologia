@@ -241,5 +241,7 @@ public class GameState {
     public Player getPlayer() {
         return player;
     }
-
+    public void subtractLife() {
+        lives --;
+    }
 }

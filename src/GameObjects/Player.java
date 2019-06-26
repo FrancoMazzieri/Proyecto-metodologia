@@ -27,7 +27,9 @@ public class Player extends MovingObject {
     private final double DELTAANGLE = 0.1;
     private boolean accelerating = false;
     private cronometer fireRate;
-
+    private boolean spawning, visible;
+    private cronometer spawnTime, flickerTime;
+    
     public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState) {
         super(posicion, velocity, maxvel, textura, gameState);
 
@@ -40,7 +42,19 @@ public class Player extends MovingObject {
     @Override
     public void update() {
 
-        if (KeyBoard2.SHOOT && !fireRate.isRunning()) {
+        if(!spawnTime.isRunning()) {
+            spawning = false;
+            visible = true;
+	}
+		
+	if(spawning) {
+            if(!flickerTime.isRunning()) {
+		flickerTime.run(constans.FLICKER_TIME);
+		visible = !visible;
+            }
+	}
+        
+        if (KeyBoard2.SHOOT && !fireRate.isRunning()&& !spawning) {
             gameState.getMovingObjects().add(0, new Laser(getCenter().add(heading.scale(width)),
                     heading,
                     constans.LASER_VEL,
@@ -88,12 +102,31 @@ public class Player extends MovingObject {
             posicion.setY(constans.HEIGHT);
         }
         fireRate.update();
-        collidesWith();
+	spawnTime.update();
+	flickerTime.update();
+	collidesWith();
     }
-
+    
+    
+    @Override
+    public void Destroy() {
+        spawning = true;
+	spawnTime.run(constans.SPAWNING_TIME);
+	resetValues();
+	gameState.subtractLife();
+    }
+	
+    private void resetValues() {
+	angle = 0;
+	velocity = new Vector2D();
+	posicion = new Vector2D(constans.WIDTH/2 - Assets.player.getWidth()/2,constans.HEIGHT/2 - Assets.player.getHeight()/2);
+    }
+    
     @Override
     public void draw(Graphics g) {
-
+        if(!visible)
+            return;
+        
         Graphics2D g2d = (Graphics2D) g;
 
         AffineTransform at1 = AffineTransform.getTranslateInstance(posicion.getX() + width / 2 + 5, posicion.getY() + height / 2 + 10);
@@ -111,5 +144,7 @@ public class Player extends MovingObject {
         g2d.drawImage(textura, at, null);
 
     }
-
+    public boolean isSpawning() {
+        return spawning;
+    }
 }
