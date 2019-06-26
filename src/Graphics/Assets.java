@@ -23,7 +23,9 @@ public class Assets {
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];
     public static BufferedImage[] tinies = new BufferedImage[2];
-            
+    
+    //Explociones
+    	public static BufferedImage[] exp = new BufferedImage[9];
             
     public static void init() {
     
@@ -48,6 +50,10 @@ public class Assets {
 		
 		for(int i = 0; i < tinies.length; i++)
 			tinies[i] = Loader.ImageLoader("/Meteors/meteorBrown_tiny"+(i+1)+".png");
+                for (int i = 0; i < exp.length; i++) {
+                    exp[i] = Loader.ImageLoader("/explosion/"+i+".png");
+            
+        }
 
     }
 }
