@@ -27,13 +27,10 @@ public class Player extends MovingObject {
     private final double DELTAANGLE = 0.1;
     private boolean accelerating = false;
     private cronometer fireRate;
-    
-  
-    
 
     public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState) {
-        super(posicion, velocity, maxvel, textura,gameState);
-        
+        super(posicion, velocity, maxvel, textura, gameState);
+
         heading = new Vector2D(0, 1);
         acceleration = new Vector2D();
         fireRate = new cronometer();
@@ -42,18 +39,22 @@ public class Player extends MovingObject {
 
     @Override
     public void update() {
-   
-        
+
         if (KeyBoard2.SHOOT && !fireRate.isRunning()) {
-            gameState.getMovingObjects().add(0 , new Laser(getCenter().add(heading.scale(width )), heading, 10, angle, Assets.redLaser,gameState));  
+            gameState.getMovingObjects().add(0, new Laser(getCenter().add(heading.scale(width)),
+                    heading,
+                    constans.LASER_VEL,
+                     angle,
+                    Assets.redLaser,
+                    gameState));
         }
-           fireRate.run(constans.FIRERATE);
+        fireRate.run(constans.FIRERATE);
         if (KeyBoard2.RIGHT) {
-            angle +=constans.DELTAANGLE;
+            angle += constans.DELTAANGLE;
         }
 
         if (KeyBoard2.LEFT) {
-            angle -=constans.DELTAANGLE;
+            angle -= constans.DELTAANGLE;
         }
 
         if (KeyBoard2.UP) {
@@ -86,8 +87,8 @@ public class Player extends MovingObject {
         if (posicion.getY() < 0) {
             posicion.setY(constans.HEIGHT);
         }
-          fireRate.update();
-          collidesWith();
+        fireRate.update();
+        collidesWith();
     }
 
     @Override
@@ -110,7 +111,5 @@ public class Player extends MovingObject {
         g2d.drawImage(textura, at, null);
 
     }
-
-
 
 }

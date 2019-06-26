@@ -23,40 +23,55 @@ public class Assets {
     public static BufferedImage[] meds = new BufferedImage[2];
     public static BufferedImage[] smalls = new BufferedImage[2];
     public static BufferedImage[] tinies = new BufferedImage[2];
-    
+
     //Explociones
-    	public static BufferedImage[] exp = new BufferedImage[9];
-        
+    public static BufferedImage[] exp = new BufferedImage[9];
+
     //Ufo
-        public static BufferedImage ufo;
-            
+    public static BufferedImage ufo;
+    // numbers
+
+    public static BufferedImage[] numbers = new BufferedImage[11];
+
+    public static BufferedImage life;
+
     public static void init() {
-    
-		player = Loader.ImageLoader("/ships/player.png");
-		
-		speed = Loader.ImageLoader("/effects/fire08.png");
-		
-		blueLaser = Loader.ImageLoader("/lasers/laserBlue01.png");
-		
-		greenLaser = Loader.ImageLoader("/lasers/laserGreen11.png");
-		
-		redLaser = Loader.ImageLoader("/lasers/laserRed01.png");
-		
-		for(int i = 0; i < bigs.length; i++)
-			bigs[i] = Loader.ImageLoader("/Meteors/meteorGrey_big"+(i+1)+".png");
-		
-		for(int i = 0; i < meds.length; i++)
-			meds[i] = Loader.ImageLoader("/Meteors/meteorBrown_med"+(i+1)+".png");
-		
-		for(int i = 0; i < smalls.length; i++)
-			smalls[i] = Loader.ImageLoader("/Meteors/meteorBrown_small"+(i+1)+".png");
-		
-		for(int i = 0; i < tinies.length; i++)
-			tinies[i] = Loader.ImageLoader("/Meteors/meteorBrown_tiny"+(i+1)+".png");
-                for (int i = 0; i < exp.length; i++) {
-                    exp[i] = Loader.ImageLoader("/explosion/"+i+".png");
-                    
-                    ufo = Loader.ImageLoader("/ships/ufo.png");
+
+        player = Loader.ImageLoader("/ships/player.png");
+
+        speed = Loader.ImageLoader("/effects/fire08.png");
+
+        blueLaser = Loader.ImageLoader("/lasers/laserBlue01.png");
+
+        greenLaser = Loader.ImageLoader("/lasers/laserGreen11.png");
+
+        redLaser = Loader.ImageLoader("/lasers/laserRed01.png");
+
+        ufo = Loader.ImageLoader("/ships/ufo.png");
+
+        life = Loader.ImageLoader("/others/life.png");
+
+        for (int i = 0; i < bigs.length; i++) {
+            bigs[i] = Loader.ImageLoader("/Meteors/meteorGrey_big" + (i + 1) + ".png");
+        }
+
+        for (int i = 0; i < meds.length; i++) {
+            meds[i] = Loader.ImageLoader("/Meteors/meteorBrown_med" + (i + 1) + ".png");
+        }
+
+        for (int i = 0; i < smalls.length; i++) {
+            smalls[i] = Loader.ImageLoader("/Meteors/meteorBrown_small" + (i + 1) + ".png");
+        }
+
+        for (int i = 0; i < tinies.length; i++) {
+            tinies[i] = Loader.ImageLoader("/Meteors/meteorBrown_tiny" + (i + 1) + ".png");
+        }
+        for (int i = 0; i < exp.length; i++) {
+            exp[i] = Loader.ImageLoader("/explosion/" + i + ".png");
+
+        }
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = Loader.ImageLoader("/numbers/" + i + ".png");
         }
 
     }

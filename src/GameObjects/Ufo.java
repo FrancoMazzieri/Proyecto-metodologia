@@ -19,13 +19,13 @@ import java.util.ArrayList;
  * @author Franco
  */
 public class Ufo extends MovingObject {
-
+    
     private ArrayList<Vector2D> path;
     private Vector2D currentNode;
     private int index;
     private boolean following;
     private cronometer fireRate;
-
+    
     public Ufo(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, ArrayList<Vector2D> path, GameState gameState) {
         super(posicion, velocity, maxvel, textura, gameState);
         this.path = path;
@@ -33,11 +33,11 @@ public class Ufo extends MovingObject {
         following = true;
         fireRate = new cronometer();
         fireRate.run(constans.UFO_FIRE_RATE);
-
+        
     }
-
+    
     private Vector2D pathFollowing() {
-
+        
         currentNode = path.get(index);
         double distanceToNode = currentNode.subtract(getCenter()).getMagnitude();
         if (distanceToNode < constans.NODE_RADIUS) {
@@ -45,17 +45,17 @@ public class Ufo extends MovingObject {
             if (index >= path.size()) {
                 following = false;
             }
-
+            
         }
         return seekForce(currentNode);
     }
-
+    
     private Vector2D seekForce(Vector2D target) {
         Vector2D desiredVelocity = target.subtract(getCenter());
         desiredVelocity = desiredVelocity.normalize().scale(maxvel);
         return desiredVelocity.subtract(velocity);
     }
-
+    
     @Override
     public void update() {
         Vector2D pathFollowing;
@@ -64,55 +64,65 @@ public class Ufo extends MovingObject {
         } else {
             pathFollowing = new Vector2D();
         }
-
+        
         pathFollowing = pathFollowing.scale(1 / constans.UFO_MASS);
-
+        
         velocity.add(pathFollowing);
-
+        
         velocity = velocity.limit(maxvel);
-
+        
         posicion = posicion.add(velocity);
-
+        
         if (posicion.getX() > constans.WIDTH || posicion.getY() > constans.HEIGHT
-                || posicion.getX() < 0 || posicion.getY() < 0) {
+                || posicion.getX() < -width || posicion.getY() < -height) {
             Destroy();
         }
 
         //shoot
         if (!fireRate.isRunning()) {
             Vector2D toPlayer = gameState.getPlayer().getCenter().subtract(getCenter());
-
+            
             toPlayer = toPlayer.normalize();
-
+            
             double currentAngle = toPlayer.getAngle();
-
-            double newAngle = Math.random() * (Math.PI) - Math.PI / 2 + currentAngle;
-
-            toPlayer.setDirection(newAngle);
-
+            
+            currentAngle += Math.random() * constans.UFO_ANGLE_RANGE - constans.UFO_ANGLE_RANGE / 2;
+            
+            if (toPlayer.getX() < 0) {
+                currentAngle = -currentAngle + Math.PI;
+            }
+            
+           toPlayer = toPlayer.setDirection(currentAngle);
+            
             Laser laser = new Laser(getCenter().add(toPlayer.scale(width)),
-                    toPlayer, constans.LASER_VEL, newAngle + Math.PI / 2, Assets.redLaser, gameState
+                    toPlayer, constans.LASER_VEL, currentAngle + Math.PI / 2, Assets.redLaser, gameState
             );
             gameState.getMovingObjects().add(0, laser);
             
             fireRate.run(constans.UFO_FIRE_RATE);
         }
         angle += 0.05;
-
+        
         collidesWith();
         fireRate.update();
     }
-
+    
+    @Override
+    protected void Destroy() {
+        gameState.addScore(constans.UFO_SCORE);
+        super.Destroy();
+    }
+    
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-
+        
         at = AffineTransform.getTranslateInstance(posicion.getX(), posicion.getY());
-
+        
         at.rotate(angle, width / 2, height / 2);
-
+        
         g2d.drawImage(textura, at, null);
-
+        
     }
-
+    
 }

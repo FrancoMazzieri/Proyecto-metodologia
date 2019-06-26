@@ -25,6 +25,8 @@ public class constans {
     public static final double LASER_VEL = 15.0;
     //Meteors propiedades
     public static final double METEOR_VEL = 2.0;
+    
+    public static final int METEOR_SCORE = 20;
     //Ufo
     public static final int NODE_RADIUS = 160;
 
@@ -32,6 +34,10 @@ public class constans {
 
     public static final int UFO_MAX_VEL = 3;
 
-    public static long UFO_FIRE_RATE = 1000;
+    public static long UFO_FIRE_RATE = 1500;
+
+    public static double UFO_ANGLE_RANGE = Math.PI / 2;
+
+    public static final int UFO_SCORE = 40;
 
 }
