@@ -74,7 +74,7 @@ public class Ufo extends MovingObject {
         posicion = posicion.add(velocity);
         
         if (posicion.getX() > constans.WIDTH || posicion.getY() > constans.HEIGHT
-                || posicion.getX() < -width || posicion.getY() < -height) {
+                || posicion.getX() < constans.WIDTH || posicion.getY() < constans.HEIGHT) {
             Destroy();
         }
 
@@ -102,7 +102,6 @@ public class Ufo extends MovingObject {
             fireRate.run(constans.UFO_FIRE_RATE);
         }
         angle += 0.05;
-        
         collidesWith();
         fireRate.update();
     }

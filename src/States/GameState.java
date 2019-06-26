@@ -87,7 +87,7 @@ public class GameState {
     private void startWave() {
 
         double x, y;
-
+    
         for (int i = 0; i < meteors; i++) {
 
             x = i % 2 == 0 ? Math.random() * constans.WIDTH : 0;
@@ -174,13 +174,14 @@ public class GameState {
         }
 
         startWave();
-
+        
     }
 
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        
 
         for (int i = 0; i < movingObjects.size(); i++) {
             movingObjects.get(i).draw(g);
@@ -201,9 +202,11 @@ public class GameState {
         String scoreToString = Integer.toString(score);
 
         for (int i = 0; i < scoreToString.length(); i++) {
+            
             g.drawImage(Assets.numbers[Integer.parseInt(scoreToString.substring(i, i + 1))], (int) pos.getX(), (int) pos.getY(),
                     null);
-            pos.setX(pos.getX() + 20);
+            
+            pos.setX(pos.getY() + 700);
         }
 
     }
@@ -241,7 +244,8 @@ public class GameState {
     public Player getPlayer() {
         return player;
     }
+
     public void subtractLife() {
-        lives --;
+        lives--;
     }
 }

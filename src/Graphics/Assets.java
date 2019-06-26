@@ -47,9 +47,10 @@ public class Assets {
 
         redLaser = Loader.ImageLoader("/lasers/laserRed01.png");
 
-        ufo = Loader.ImageLoader("/ships/ufo.png");
 
         life = Loader.ImageLoader("/others/life.png");
+        
+        ufo = Loader.ImageLoader("/ships/enemyBlack1.png");
 
         for (int i = 0; i < bigs.length; i++) {
             bigs[i] = Loader.ImageLoader("/Meteors/meteorGrey_big" + (i + 1) + ".png");
@@ -71,7 +72,7 @@ public class Assets {
 
         }
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = Loader.ImageLoader("/numbers/" + i + ".png");
+            numbers[i] = Loader.ImageLoader("/numbers/" +( i )+ ".png");
         }
 
     }
