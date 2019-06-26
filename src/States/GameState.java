@@ -9,6 +9,8 @@ import GameObjects.Meteor;
 import GameObjects.MovingObject;
 import GameObjects.Player;
 import GameObjects.Size;
+import GameObjects.Ufo;
+import GameObjects.constans;
 import Graphics.Animation;
 import Graphics.Assets;
 import Math.Vector2D;
@@ -63,7 +65,7 @@ public class GameState {
             movingObjects.add(new Meteor(
                     meteor.getPosicion(),
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
-                    Constants.METEOR_VEL * Math.random() + 1,
+                    constans.METEOR_VEL * Math.random() + 1,
                     textures[(int) (Math.random() * textures.length)],
                     this,
                     newSize
@@ -77,15 +79,15 @@ public class GameState {
 
         for (int i = 0; i < meteors; i++) {
 
-            x = i % 2 == 0 ? Math.random() * Constants.WIDTH : 0;
-            y = i % 2 == 0 ? 0 : Math.random() * Constants.HEIGHT;
+            x = i % 2 == 0 ? Math.random() * constans.WIDTH : 0;
+            y = i % 2 == 0 ? 0 : Math.random() * constans.HEIGHT;
 
             BufferedImage texture = Assets.bigs[(int) (Math.random() * Assets.bigs.length)];
 
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
-                    Constants.METEOR_VEL * Math.random() + 1,
+                    constans.METEOR_VEL * Math.random() + 1,
                     texture,
                     this,
                     Size.BIG
@@ -93,13 +95,51 @@ public class GameState {
         }
 
         meteors++;
-
+        spawnUfo();
     }
 
     public void playExplosion(Vector2D position) {
         explosions.add(new Animation(Assets.exp,
-                50, 
+                50,
                 position.subtract(new Vector2D(Assets.exp[0].getWidth() / 2, Assets.exp[0].getHeight() / 2))));
+    }
+
+    private void spawnUfo() {
+
+        int rand = (int) (Math.random() * 2);
+
+        double x = rand == 0 ? (Math.random() * constans.WIDTH) : 0;
+        double y = rand == 0 ? 0 : (Math.random() * constans.HEIGHT);
+
+        ArrayList<Vector2D> path = new ArrayList<Vector2D>();
+
+        double posX, posY;
+
+        posX = Math.random() * constans.WIDTH / 2;
+        posY = Math.random() * constans.HEIGHT / 2;
+        path.add(new Vector2D(posX, posY));
+
+        posX = Math.random() * (constans.WIDTH / 2) + constans.WIDTH / 2;
+        posY = Math.random() * constans.HEIGHT / 2;
+        path.add(new Vector2D(posX, posY));
+
+        posX = Math.random() * constans.WIDTH / 2;
+        posY = Math.random() * (constans.HEIGHT / 2) + constans.HEIGHT / 2;
+        path.add(new Vector2D(posX, posY));
+
+        posX = Math.random() * (constans.WIDTH / 2) + constans.WIDTH / 2;
+        posY = Math.random() * (constans.HEIGHT / 2) + constans.HEIGHT / 2;
+        path.add(new Vector2D(posX, posY));
+
+        movingObjects.add(new Ufo(
+                new Vector2D(x, y),
+                new Vector2D(),
+                constans.UFO_MAX_VEL,
+                Assets.ufo,
+                path,
+                this
+        ));
+
     }
 
     public void update() {
@@ -144,13 +184,8 @@ public class GameState {
         return movingObjects;
     }
 
-    private static class Constants {
-
-        private static double WIDTH;
-        private static double HEIGHT;
-        private static double METEOR_VEL;
-
-        public Constants() {
-        }
+    public Player getPlayer() {
+        return player;
     }
+
 }
