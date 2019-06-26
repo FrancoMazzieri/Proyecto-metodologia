@@ -27,7 +27,7 @@ public abstract class MovingObject extends GameObject {
     }
 
     protected void collidesWith() {
-        ArrayList<MovingObject> movingObjects = gameState.getMovingObjects();
+            ArrayList<MovingObject> movingObjects = gameState.getMovingObjects();
         for (int i = 0; i < movingObjects.size(); i++) {
             MovingObject m = movingObjects.get(i);
             if (m.equals(this)) {

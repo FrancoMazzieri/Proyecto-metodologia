@@ -57,7 +57,7 @@ public class windows extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         new windows().start();
-        System.out.println("ss");
+       
     }
 
     private void update() {

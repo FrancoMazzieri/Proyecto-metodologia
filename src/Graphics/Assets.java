@@ -26,20 +26,28 @@ public class Assets {
             
             
     public static void init() {
-        player = Loader.ImageLoader("/Naves/player.png");
-        speed = Loader.ImageLoader("/effects/fire08.png");
-        blueLaser = Loader.ImageLoader("/Lasers/laserBlue01.png");
-        greenLaser = Loader.ImageLoader("/Lasers/laserGreen11.png");
-        redLaser = Loader.ImageLoader("/Lasers/laserRed01.png");
-        for(int i=0; i < bigs.length; i++)
-             bigs[i] = Loader.ImageLoader("/Meteors/meteorBrown_big"+(i+1)+".png");
-        for(int i=0; i < meds.length; i++)
-             bigs[i] = Loader.ImageLoader("/Meteors/meteorBrown_med"+(i+1)+".png");
-        for(int i=0; i < smalls.length; i++)
-             bigs[i] = Loader.ImageLoader("/Meteors/meteorBrown_small"+(i+1)+".png");
-        for(int i=0; i < tinies.length; i++)
-             bigs[i] = Loader.ImageLoader("/Meteors/meteorBrown_tiny"+(i+1)+".png");
-        
+    
+		player = Loader.ImageLoader("/ships/player.png");
+		
+		speed = Loader.ImageLoader("/effects/fire08.png");
+		
+		blueLaser = Loader.ImageLoader("/lasers/laserBlue01.png");
+		
+		greenLaser = Loader.ImageLoader("/lasers/laserGreen11.png");
+		
+		redLaser = Loader.ImageLoader("/lasers/laserRed01.png");
+		
+		for(int i = 0; i < bigs.length; i++)
+			bigs[i] = Loader.ImageLoader("/Meteors/meteorGrey_big"+(i+1)+".png");
+		
+		for(int i = 0; i < meds.length; i++)
+			meds[i] = Loader.ImageLoader("/Meteors/meteorBrown_med"+(i+1)+".png");
+		
+		for(int i = 0; i < smalls.length; i++)
+			smalls[i] = Loader.ImageLoader("/Meteors/meteorBrown_small"+(i+1)+".png");
+		
+		for(int i = 0; i < tinies.length; i++)
+			tinies[i] = Loader.ImageLoader("/Meteors/meteorBrown_tiny"+(i+1)+".png");
 
     }
 }
