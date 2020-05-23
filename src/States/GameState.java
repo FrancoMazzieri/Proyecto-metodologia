@@ -1,24 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package States;
 
+import GameObjects.Constants;
+import GameObjects.Message;
 import GameObjects.Meteor;
 import GameObjects.MovingObject;
 import GameObjects.Player;
 import GameObjects.Size;
 import GameObjects.Ufo;
-import GameObjects.constans;
 import Graphics.Animation;
 import Graphics.Assets;
+import Graphics.Text;
 import Math.Vector2D;
+
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 
 /**
  *
@@ -26,21 +26,29 @@ import java.util.ArrayList;
  */
 public class GameState {
 
+    public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
+			Constants.HEIGHT/2 - Assets.player.getHeight()/2);
+	
     private Player player;
 
     private ArrayList<MovingObject> movingObjects = new ArrayList<MovingObject>();
 
     private ArrayList<Animation> explosions = new ArrayList<Animation>();
 
+    private ArrayList<Message> messages = new ArrayList<Message>();
+
     private int score = 0;
 
     private int lives = 3;
 
     private int meteors;
+    
+    private int waves = 1;
 
     public GameState() {
-        player = new Player(new Vector2D(constans.WIDTH / 2 - Assets.player.getWidth() / 2, constans.HEIGHT / 2
-                - Assets.player.getHeight() / 2), new Vector2D(), constans.PLAYER_MAX_VEL, Assets.player, this);
+        
+        player = new Player(new Vector2D(Constants.WIDTH / 2 - Assets.player.getWidth() / 2, Constants.HEIGHT / 2
+                - Assets.player.getHeight() / 2), new Vector2D(), Constants.PLAYER_MAX_VEL, Assets.player, this);
 
         movingObjects.add(player);
 
@@ -50,9 +58,9 @@ public class GameState {
 
     }
 
-    public void addScore(int value) {
+    public void addScore(int value, Vector2D position) {
         score += value;
-
+        messages.add(new Message(position, true, "+"+value+" score", Color.WHITE, false, Assets.fontMed, this));
     }
 
     public void divideMeteor(Meteor meteor) {
@@ -76,7 +84,7 @@ public class GameState {
             movingObjects.add(new Meteor(
                     meteor.getPosicion(),
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
-                    constans.METEOR_VEL * Math.random() + 1,
+                    Constants.METEOR_VEL * Math.random() + 1,
                     textures[(int) (Math.random() * textures.length)],
                     this,
                     newSize
@@ -86,19 +94,22 @@ public class GameState {
 
     private void startWave() {
 
+        messages.add(new Message (new Vector2D(Constants.WIDTH/2, Constants.HEIGHT/2), false, 
+                "WAVE " + waves, Color.WHITE, true, Assets.fontBig, this));
+        
         double x, y;
     
         for (int i = 0; i < meteors; i++) {
 
-            x = i % 2 == 0 ? Math.random() * constans.WIDTH : 0;
-            y = i % 2 == 0 ? 0 : Math.random() * constans.HEIGHT;
+            x = i % 2 == 0 ? Math.random() * Constants.WIDTH : 0;
+            y = i % 2 == 0 ? 0 : Math.random() * Constants.HEIGHT;
 
             BufferedImage texture = Assets.bigs[(int) (Math.random() * Assets.bigs.length)];
 
             movingObjects.add(new Meteor(
                     new Vector2D(x, y),
                     new Vector2D(0, 1).setDirection(Math.random() * Math.PI * 2),
-                    constans.METEOR_VEL * Math.random() + 1,
+                    Constants.METEOR_VEL * Math.random() + 1,
                     texture,
                     this,
                     Size.BIG
@@ -119,33 +130,33 @@ public class GameState {
 
         int rand = (int) (Math.random() * 2);
 
-        double x = rand == 0 ? (Math.random() * constans.WIDTH) : constans.WIDTH;
-        double y = rand == 0 ? constans.HEIGHT : (Math.random() * constans.HEIGHT);
+        double x = rand == 0 ? (Math.random() * Constants.WIDTH) : Constants.WIDTH;
+        double y = rand == 0 ? Constants.HEIGHT : (Math.random() * Constants.HEIGHT);
 
         ArrayList<Vector2D> path = new ArrayList<Vector2D>();
 
         double posX, posY;
 
-        posX = Math.random() * constans.WIDTH / 2;
-        posY = Math.random() * constans.HEIGHT / 2;
+        posX = Math.random() * Constants.WIDTH / 2;
+        posY = Math.random() * Constants.HEIGHT / 2;
         path.add(new Vector2D(posX, posY));
 
-        posX = Math.random() * (constans.WIDTH / 2) + constans.WIDTH / 2;
-        posY = Math.random() * constans.HEIGHT / 2;
+        posX = Math.random() * (Constants.WIDTH / 2) + Constants.WIDTH / 2;
+        posY = Math.random() * Constants.HEIGHT / 2;
         path.add(new Vector2D(posX, posY));
 
-        posX = Math.random() * constans.WIDTH / 2;
-        posY = Math.random() * (constans.HEIGHT / 2) + constans.HEIGHT / 2;
+        posX = Math.random() * Constants.WIDTH / 2;
+        posY = Math.random() * (Constants.HEIGHT / 2) + Constants.HEIGHT / 2;
         path.add(new Vector2D(posX, posY));
 
-        posX = Math.random() * (constans.WIDTH / 2) + constans.WIDTH / 2;
-        posY = Math.random() * (constans.HEIGHT / 2) + constans.HEIGHT / 2;
+        posX = Math.random() * (Constants.WIDTH / 2) + Constants.WIDTH / 2;
+        posY = Math.random() * (Constants.HEIGHT / 2) + Constants.HEIGHT / 2;
         path.add(new Vector2D(posX, posY));
 
         movingObjects.add(new Ufo(
                 new Vector2D(x, y),
                 new Vector2D(),
-                constans.UFO_MAX_VEL,
+                Constants.UFO_MAX_VEL,
                 Assets.ufo,
                 path,
                 this
@@ -182,6 +193,9 @@ public class GameState {
 
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         
+        for (int i = 0; i < messages.size(); i++) {
+            messages.get(i).draw(g2d);
+        }
 
         for (int i = 0; i < movingObjects.size(); i++) {
             movingObjects.get(i).draw(g);
@@ -194,6 +208,7 @@ public class GameState {
 
         drawScore(g);
         drawLives(g);
+        Text.drawText(g, "WAVE " + waves, new Vector2D(Constants.WIDTH / 2, Constants.HEIGHT / 2), true, Color.WHITE, Assets.fontBig);
     }
 
     private void drawScore(Graphics g) {
@@ -241,6 +256,10 @@ public class GameState {
         return movingObjects;
     }
 
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+        
     public Player getPlayer() {
         return player;
     }
