@@ -28,8 +28,8 @@ public class Laser extends MovingObject {
     @Override
     public void update() {
         posicion = posicion.add(velocity);
-        if(posicion.getX() < 0 || posicion.getX() > constans.WIDTH ||
-                posicion.getY() < 0 ||posicion.getY() > constans.HEIGHT){
+        if(posicion.getX() < 0 || posicion.getX() > Constants.WIDTH ||
+                posicion.getY() < 0 ||posicion.getY() > Constants.HEIGHT){
             Destroy();
         }
         

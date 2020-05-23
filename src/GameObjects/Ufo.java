@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GameObjects;
 
 import Graphics.Assets;
@@ -32,7 +27,7 @@ public class Ufo extends MovingObject {
         index = 0;
         following = true;
         fireRate = new cronometer();
-        fireRate.run(constans.UFO_FIRE_RATE);
+        fireRate.run(Constants.UFO_FIRE_RATE);
         
     }
     
@@ -40,7 +35,7 @@ public class Ufo extends MovingObject {
         
         currentNode = path.get(index);
         double distanceToNode = currentNode.subtract(getCenter()).getMagnitude();
-        if (distanceToNode < constans.NODE_RADIUS) {
+        if (distanceToNode < Constants.NODE_RADIUS) {
             index++;
             if (index >= path.size()) {
                 following = false;
@@ -65,7 +60,7 @@ public class Ufo extends MovingObject {
             pathFollowing = new Vector2D();
         }
         
-        pathFollowing = pathFollowing.scale(1 / constans.UFO_MASS);
+        pathFollowing = pathFollowing.scale(1 / Constants.UFO_MASS);
         
         velocity.add(pathFollowing);
         
@@ -73,8 +68,8 @@ public class Ufo extends MovingObject {
         
         posicion = posicion.add(velocity);
         
-        if (posicion.getX() > constans.WIDTH || posicion.getY() > constans.HEIGHT
-                || posicion.getX() < constans.WIDTH || posicion.getY() < constans.HEIGHT) {
+        if (posicion.getX() > Constants.WIDTH || posicion.getY() > Constants.HEIGHT
+                || posicion.getX() < Constants.WIDTH || posicion.getY() < Constants.HEIGHT) {
             Destroy();
         }
 
@@ -86,7 +81,7 @@ public class Ufo extends MovingObject {
             
             double currentAngle = toPlayer.getAngle();
             
-            currentAngle += Math.random() * constans.UFO_ANGLE_RANGE - constans.UFO_ANGLE_RANGE / 2;
+            currentAngle += Math.random() * Constants.UFO_ANGLE_RANGE - Constants.UFO_ANGLE_RANGE / 2;
             
             if (toPlayer.getX() < 0) {
                 currentAngle = -currentAngle + Math.PI;
@@ -95,11 +90,11 @@ public class Ufo extends MovingObject {
            toPlayer = toPlayer.setDirection(currentAngle);
             
             Laser laser = new Laser(getCenter().add(toPlayer.scale(width)),
-                    toPlayer, constans.LASER_VEL, currentAngle + Math.PI / 2, Assets.redLaser, gameState
+                    toPlayer, Constants.LASER_VEL, currentAngle + Math.PI / 2, Assets.redLaser, gameState
             );
             gameState.getMovingObjects().add(0, laser);
             
-            fireRate.run(constans.UFO_FIRE_RATE);
+            fireRate.run(Constants.UFO_FIRE_RATE);
         }
         angle += 0.05;
         collidesWith();
@@ -108,7 +103,7 @@ public class Ufo extends MovingObject {
     
     @Override
     protected void Destroy() {
-        gameState.addScore(constans.UFO_SCORE);
+        gameState.addScore(Constants.UFO_SCORE, posicion);
         super.Destroy();
     }
     

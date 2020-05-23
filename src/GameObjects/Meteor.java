@@ -28,25 +28,25 @@ public class Meteor extends MovingObject {
     public void update() {
         posicion = posicion.add(velocity);
 
-        if (posicion.getX() > constans.WIDTH) {
+        if (posicion.getX() > Constants.WIDTH) {
             posicion.setX(-width);
         }
-        if (posicion.getY() > constans.WIDTH) {
+        if (posicion.getY() > Constants.WIDTH) {
             posicion.setY(-height);
         }
         if (posicion.getX() < -width) {
-            posicion.setX(constans.HEIGHT);
+            posicion.setX(Constants.HEIGHT);
         }
         if (posicion.getY() < -height) {
-            posicion.setY(constans.HEIGHT);
+            posicion.setY(Constants.HEIGHT);
         }
-        angle += constans.DELTAANGLE / 2;
+        angle += Constants.DELTAANGLE / 2;
     }
 
     @Override
     public void Destroy() {
         gameState.divideMeteor(this);
-        gameState.addScore(constans.METEOR_SCORE);
+        gameState.addScore(Constants.METEOR_SCORE, posicion);
         super.Destroy();
     }
 

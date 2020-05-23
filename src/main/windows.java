@@ -5,7 +5,7 @@
  */
 package main;
 
-import GameObjects.constans;
+import GameObjects.Constants;
 import Graphics.Assets;
 import States.GameState;
 import input2.KeyBoard2;
@@ -37,7 +37,7 @@ public class windows extends JFrame implements Runnable {
 
     public windows() {
         setTitle("JavaApplication32");
-        setSize(constans.WIDTH,constans.HEIGHT);
+        setSize(Constants.WIDTH,Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -46,9 +46,9 @@ public class windows extends JFrame implements Runnable {
         canvas = new Canvas();
         keyBoard = new KeyBoard2();
         
-        canvas.setPreferredSize(new Dimension(constans.WIDTH,constans.HEIGHT));
-        canvas.setMaximumSize(new Dimension(constans.WIDTH,constans.HEIGHT));
-        canvas.setMinimumSize(new Dimension(constans.WIDTH,constans.HEIGHT));
+        canvas.setPreferredSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
+        canvas.setMaximumSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
+        canvas.setMinimumSize(new Dimension(Constants.WIDTH,Constants.HEIGHT));
         canvas.setFocusable(true);
         add(canvas);
         canvas.addKeyListener(keyBoard);
@@ -76,7 +76,7 @@ public class windows extends JFrame implements Runnable {
         //----------------------------------
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, constans.WIDTH,constans.HEIGHT);
+        g.fillRect(0, 0, Constants.WIDTH,Constants.HEIGHT);
         gameState.draw(g);
         g.drawString(""+averageFps, 10, 20);
         //----------------------------------

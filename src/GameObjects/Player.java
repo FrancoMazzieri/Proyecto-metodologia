@@ -51,7 +51,7 @@ public class Player extends MovingObject {
 
         if (spawning) {
             if (!flickerTime.isRunning()) {
-                flickerTime.run(constans.FLICKER_TIME);
+                flickerTime.run(Constants.FLICKER_TIME);
                 visible = !visible;
             }
         }
@@ -59,26 +59,26 @@ public class Player extends MovingObject {
         if (KeyBoard2.SHOOT && !fireRate.isRunning() && !spawning) {
             gameState.getMovingObjects().add(0, new Laser(getCenter().add(heading.scale(width)),
                     heading,
-                    constans.LASER_VEL,
+                    Constants.LASER_VEL,
                     angle,
                     Assets.redLaser,
                     gameState));
         }
-        fireRate.run(constans.FIRERATE);
+        fireRate.run(Constants.FIRERATE);
         if (KeyBoard2.RIGHT) {
-            angle += constans.DELTAANGLE;
+            angle += Constants.DELTAANGLE;
         }
 
         if (KeyBoard2.LEFT) {
-            angle -= constans.DELTAANGLE;
+            angle -= Constants.DELTAANGLE;
         }
 
         if (KeyBoard2.UP) {
-            acceleration = heading.scale(constans.ACC);
+            acceleration = heading.scale(Constants.ACC);
             accelerating = true;
         } else {
             if (velocity.getMagnitude() != 0) {
-                acceleration = (velocity.scale(-1).normalize()).scale(constans.ACC / 2);
+                acceleration = (velocity.scale(-1).normalize()).scale(Constants.ACC / 2);
             }
             accelerating = false;
 
@@ -91,17 +91,17 @@ public class Player extends MovingObject {
 
         posicion = posicion.add(velocity);
 
-        if (posicion.getX() > constans.WIDTH) {
+        if (posicion.getX() > Constants.WIDTH) {
             posicion.setX(0);
         }
-        if (posicion.getY() > constans.WIDTH) {
+        if (posicion.getY() > Constants.WIDTH) {
             posicion.setY(0);
         }
         if (posicion.getX() < 0) {
-            posicion.setX(constans.HEIGHT);
+            posicion.setX(Constants.HEIGHT);
         }
         if (posicion.getY() < 0) {
-            posicion.setY(constans.HEIGHT);
+            posicion.setY(Constants.HEIGHT);
         }
         fireRate.update();
         spawnTime.update();
@@ -112,7 +112,7 @@ public class Player extends MovingObject {
     @Override
     public void Destroy() {
         spawning = true;
-        spawnTime.run(constans.SPAWNING_TIME);
+        spawnTime.run(Constants.SPAWNING_TIME);
         resetValues();
         gameState.subtractLife();
     }
@@ -120,7 +120,7 @@ public class Player extends MovingObject {
     private void resetValues() {
         angle = 0;
         velocity = new Vector2D();
-        posicion = new Vector2D(constans.WIDTH / 2 - Assets.player.getWidth() / 2, constans.HEIGHT / 2 - Assets.player.getHeight() / 2);
+        posicion = new Vector2D(Constants.WIDTH / 2 - Assets.player.getWidth() / 2, Constants.HEIGHT / 2 - Assets.player.getHeight() / 2);
     }
 
     @Override
