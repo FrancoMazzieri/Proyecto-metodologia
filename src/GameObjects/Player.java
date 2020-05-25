@@ -6,6 +6,7 @@
 package GameObjects;
 
 import Graphics.Assets;
+import Graphics.Sound;
 import Math.Vector2D;
 import States.GameState;
 import input2.KeyBoard2;
@@ -30,6 +31,8 @@ public class Player extends MovingObject {
     private boolean spawning, visible;
     private cronometer spawnTime, flickerTime;
 
+    private Sound shoot, loose;
+     
     public Player(Vector2D posicion, Vector2D velocity, double maxvel, BufferedImage textura, GameState gameState) {
         super(posicion, velocity, maxvel, textura, gameState);
 
@@ -38,7 +41,8 @@ public class Player extends MovingObject {
         fireRate = new cronometer();
         spawnTime = new cronometer();
         flickerTime = new cronometer();
-
+        shoot = new Sound(Assets.playerShoot);
+        loose = new Sound(Assets.playerLoose);
     }
 
     @Override
@@ -63,8 +67,14 @@ public class Player extends MovingObject {
                     angle,
                     Assets.redLaser,
                     gameState));
+            fireRate.run(Constants.FIRERATE);
+            shoot.play();
         }
-        fireRate.run(Constants.FIRERATE);
+        
+        if(shoot.getFramePosition() > 8500){
+            shoot.stop();
+        }
+        
         if (KeyBoard2.RIGHT) {
             angle += Constants.DELTAANGLE;
         }
@@ -113,6 +123,7 @@ public class Player extends MovingObject {
     public void Destroy() {
         spawning = true;
         spawnTime.run(Constants.SPAWNING_TIME);
+        loose.play();
         resetValues();
         gameState.subtractLife();
     }

@@ -9,6 +9,7 @@ import GameObjects.Size;
 import GameObjects.Ufo;
 import Graphics.Animation;
 import Graphics.Assets;
+import Graphics.Sound;
 import Graphics.Text;
 import Math.Vector2D;
 
@@ -30,32 +31,29 @@ public class GameState {
 			Constants.HEIGHT/2 - Assets.player.getHeight()/2);
 	
     private Player player;
-
     private ArrayList<MovingObject> movingObjects = new ArrayList<MovingObject>();
-
     private ArrayList<Animation> explosions = new ArrayList<Animation>();
-
     private ArrayList<Message> messages = new ArrayList<Message>();
 
     private int score = 0;
-
     private int lives = 3;
 
     private int meteors;
-    
     private int waves = 1;
 
+    private Sound backgroundMusic; 
+            
     public GameState() {
         
         player = new Player(new Vector2D(Constants.WIDTH / 2 - Assets.player.getWidth() / 2, Constants.HEIGHT / 2
                 - Assets.player.getHeight() / 2), new Vector2D(), Constants.PLAYER_MAX_VEL, Assets.player, this);
 
         movingObjects.add(player);
-
         meteors = 1;
-
         startWave();
-
+        backgroundMusic = new Sound(Assets.backGroundMusic);
+        backgroundMusic.loop(); 
+        backgroundMusic.changeVolumen(-10.0f);
     }
 
     public void addScore(int value, Vector2D position) {

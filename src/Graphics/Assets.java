@@ -7,6 +7,8 @@ package Graphics;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 
 /**
  *
@@ -40,7 +42,9 @@ public class Assets {
     public static Font fontBig;
     public static Font fontMed;
     
-    public static void init() {
+    public static Clip backGroundMusic, explosion, playerLoose, playerShoot, ufoShoot;
+
+    public static void init() throws LineUnavailableException {
 
         player = Loader.ImageLoader("/ships/player.png");
 
@@ -82,6 +86,12 @@ public class Assets {
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = Loader.ImageLoader("/numbers/" +( i )+ ".png");
         }
-
+        
+        //cargamos los sonidos del juego
+        backGroundMusic = Loader.loadSound("/sounds/backGroundMusic.wav");
+        explosion = Loader.loadSound("/sounds/explosion.wav");
+        playerLoose = Loader.loadSound("/sounds/playerLoose.wav");
+        playerShoot = Loader.loadSound("/sounds/playerShoot.wav");
+        ufoShoot = Loader.loadSound("/sounds/ufoShoot.wav");
     }
 }
