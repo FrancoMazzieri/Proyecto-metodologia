@@ -26,8 +26,8 @@ public class Loader {
         
         try {
            return ImageIO.read(Loader.class.getResource(patch));
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     
