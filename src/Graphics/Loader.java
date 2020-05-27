@@ -9,8 +9,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -43,7 +42,7 @@ public class Loader {
         }
     }
     
-    public static Clip loadSound (String path) throws LineUnavailableException{
+    public static Clip loadSound (String path) {
         try {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(Loader.class.getResource(path)));
